@@ -1,5 +1,8 @@
 # verdict
 
+> [!WARNING]
+> **Beta, work in progress.** verdict is at v0.1.0 and still being shaped by live runs. Skills, agents, verdict formats and the `verdicts/` output may change without notice or migration path. `/panel` has had one live run; `/trial` has not yet been exercised on a real pitch.
+
 Pitch an idea, get it judged. A Claude Code plugin that runs entirely on your
 Claude subscription: no API key, every role is a Claude Code subagent with its
 own isolated context.
