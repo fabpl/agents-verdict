@@ -3,6 +3,7 @@
   "owner": {
     "name": "Fabrice Planchette"
   },
+  "description": "Plugins by Fabrice Planchette.",
   "plugins": [
     {
       "name": "verdict",
