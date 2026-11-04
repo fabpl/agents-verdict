@@ -9,7 +9,7 @@ Two modes:
 | Skill | What happens |
 |---|---|
 | `/trial <pitch>` | Counsel **for** and counsel **against** each plead, then rebut. Four profiled jurors deliberate separately and return a structured verdict. A clerk tallies the votes and the recurring objections. |
-| `/panel <question>` | Four specialists **cast for your question** each ask you two or three pointed questions, like *Qui veut être mon associé* / *Shark Tank*. You answer, then each one gives an insight-first take: position, what you have not seen, strongest objection, precedent, first step. The host groups where they agree, where they contradict, and what none of them can decide for you. |
+| `/panel <question>` | Four specialists **cast for your question**, like *Qui veut être mon associé* / *Shark Tank*. They speak one at a time: each asks two or three pointed questions, having read what the previous seats asked and what you answered, and you reply before the next one. Then each gives an insight-first take with the whole exchange in hand: position, what you have not seen, strongest objection, precedent, first step. The host groups where they agree, where they contradict, and what none of them can decide for you. |
 
 `/trial` wants an idea to judge. `/panel` takes anything: a decision, a plan,
 a product, a pitch, an existing business, a doubt. Input can be inline text or
@@ -48,9 +48,11 @@ agents/specialist.md         one seat of the panel, profiled per question (panel
 Every trial role is one markdown file in `agents/`. Edit the prompt to change
 a juror's biases or add a fifth seat (then list it in `skills/trial/SKILL.md`).
 
-The panel has no fixed cast. The host writes four profiles for each question
-and shows them before starting; swap a seat then, or name your own specialists
-in the command. What stays fixed is the spread of stances: one who did it and
+The panel has no fixed cast. The host first states the stage of your question
+(`idea`, `prototype`, `running`, `decision`) so that seats ask only what can
+be answered: an idea is not asked for revenue. It then writes four profiles
+and shows them before starting; swap a seat then, or name your own
+specialists in the command. What stays fixed is the spread of stances: one who did it and
 succeeded, one who did it and failed, one who bears the consequences, one from
 an adjacent field. That rule lives in `skills/panel/SKILL.md`; the seat's
 behaviour and take format live in `agents/specialist.md`.

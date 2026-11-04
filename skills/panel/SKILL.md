@@ -1,6 +1,6 @@
 ---
 name: panel
-description: Put a question to four specialists cast for it, Shark Tank style. Each asks pointed questions, the questioner answers, each gives an insight-first take. Use when the user wants sharp, multi-angle feedback on a decision, a plan, a product, a pitch or a doubt.
+description: Put a question to four specialists cast for it, Shark Tank style. One by one, each asks pointed questions and the questioner answers; then each gives an insight-first take with the whole exchange in hand. Use when the user wants sharp, multi-angle feedback on a decision, a plan, a product idea, a pitch or a doubt.
 argument-hint: <question, decision or pitch, or path to a file>
 disable-model-invocation: true
 ---
@@ -9,15 +9,28 @@ You are the host. You cast the panel, you run the show, you relay every
 question and every take verbatim, you never answer for the questioner and you
 never add a take of your own. Every seat is the `verdict:specialist` subagent
 of this plugin, launched with the Agent tool and given its PROFILE in the
-prompt. Keep each seat's context alive between the two rounds by continuing it
-with SendMessage rather than launching a new one.
+prompt. Keep each seat's context alive from its questions to its take by
+continuing it with SendMessage rather than launching a new one.
 
-## 0. The question
+## 0. The question and its stage
 
 The question is `$ARGUMENTS`. If it is a path to a file, read the file and use
 its content. If it is empty, ask for the question and stop until it is given.
 Do not rewrite or improve the question. It can be anything: a decision, a
-plan, a product, a pitch, an existing business, a doubt.
+plan, a product idea, a pitch, an existing business, a doubt.
+
+Before casting, state the STAGE in one line, from what the question says:
+
+- `idea`: nothing built, nothing sold. There are no customers, no revenue, no
+  churn to ask about.
+- `prototype`: something exists and a few people have touched it.
+- `running`: there are customers, revenue, a team; numbers exist and can be
+  asked for.
+- `decision`: a choice to make in an existing situation, personal or
+  professional, not a product.
+
+Every seat receives the stage with the question. Seats must ask what can be
+answered at that stage and nothing else.
 
 ## 1. Casting
 
@@ -33,8 +46,8 @@ lines:
 
 The four seats must take four different stances on the question, always:
 
-1. Someone who did this and succeeded.
-2. Someone who did this and failed.
+1. Someone who did something like this and succeeded.
+2. Someone who did something like this and failed.
 3. Someone who bears the consequences of the decision: the customer, the user,
    the team, the family, the regulator, whoever pays if it goes wrong.
 4. Someone from an adjacent field who sees what insiders no longer see.
@@ -42,29 +55,34 @@ The four seats must take four different stances on the question, always:
 If the questioner named specialists in the request, use those instead, filling
 any remaining seats by the rule above.
 
-Show the four profiles to the questioner, each in two lines, and ask whether
-to proceed or swap a seat. Then end your turn and wait. Do not launch anyone
-before they confirm.
+Show the stage and the four profiles to the questioner, each profile in two
+lines, in the order the seats will speak, and ask whether to proceed or swap a
+seat. Then end your turn and wait. Do not launch anyone before they confirm.
 
-## 2. Questions
+## 2. Questions, one seat at a time
 
-Launch the four seats in parallel, in the same message. Each gets the
-question, its own full profile, and the request "Round 1, QUESTIONS".
+The seats speak in turn, like a conversation, not all at once. For each seat
+in order:
 
-Present their output, in the language of the question: for each seat, a
-heading with its name, its first impression, then its numbered questions. Ask
-the questioner to answer in one message, referring to questions by seat and
-number. Then end your turn and wait. Do not proceed until they have answered.
+1. Launch it with the question, the stage, its own full profile, the
+   transcript of every previous seat (their questions and the questioner's
+   answers, verbatim), and the request "Round 1, QUESTIONS". The first seat
+   gets no transcript.
+2. Present only that seat's output, in the language of the question: a
+   heading with its name, its first impression, its numbered questions.
+3. Ask the questioner to answer, then end your turn and wait. Do not launch
+   the next seat until they have answered.
+
+A seat that has the transcript must not repeat a question already answered.
+It builds on the answers or asks what they raise. If the questioner skips a
+question, record it as "no answer" in the transcript; do not fill the gap.
 
 ## 3. Takes
 
-When the questioner replies, continue each seat with SendMessage, in the same
-message, giving every seat the complete exchange (all four seats' questions
-with the answers, not only its own) and the request "Round 2, TAKE". Seats
-hear each other's exchanges, as on the show.
-
-If a question was skipped, pass it along as "no answer". Do not fill the gap
-yourself.
+Once the fourth seat has its answers, continue all four seats with
+SendMessage, in the same message. Each gets the complete transcript (all four
+seats' questions with the answers) and the request "Round 2, TAKE". Seats do
+not confer; each decides alone, but with everything that was said.
 
 ## 4. Delivery
 
@@ -79,7 +97,7 @@ Present the result as markdown, in the language of the question:
    - Where they contradict each other (quote both).
    - What none of them can decide for you (the question that remains).
 
-Then save the whole exchange (question, cast, questions, answers, takes,
+Then save the whole exchange (question, stage, cast, transcript, takes,
 synthesis) to `verdicts/panel-<YYYY-MM-DD-HHMM>.md` in the current working
 directory, creating the folder if needed, and tell the questioner the path.
 
