@@ -1,6 +1,6 @@
 {
   "name": "verdict",
-  "description": "Pitch an idea and get it judged by AI agents: /trial runs a courtroom (counsel for, counsel against, a profiled jury), /panel runs a Shark Tank style panel of four partners.",
+  "description": "Pitch an idea and get it judged by AI agents: /trial runs a courtroom (counsel for, counsel against, a profiled jury), /panel puts a question to four specialists cast for it.",
   "version": "0.1.0",
   "author": {
     "name": "Fabrice Planchette"

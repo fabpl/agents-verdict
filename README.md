@@ -1,7 +1,7 @@
 # verdict
 
 > [!WARNING]
-> **Beta, work in progress.** verdict is at v0.1.0 and still being shaped by live runs. Skills, agents, verdict formats and the `verdicts/` output may change without notice or migration path. `/panel` has had one live run; `/trial` has not yet been exercised on a real pitch.
+> **Beta, work in progress.** verdict is at v0.1.0 and still being shaped by live runs. Skills, agents, verdict formats and the `verdicts/` output may change without notice or migration path. `/panel` has had two live runs; `/trial` has not yet been exercised on a real pitch.
 
 Pitch an idea, get it judged. A Claude Code plugin that runs entirely on your
 Claude subscription: no API key, every role is a Claude Code subagent with its
@@ -44,6 +44,8 @@ agents/counsel-against.md    pleads against the idea
 agents/juror-*.md            the four jurors (trial mode)
 agents/clerk.md              tallies the verdicts (trial mode)
 agents/specialist.md         one seat of the panel, profiled per question (panel mode)
+evals/                       behaviour checks, run with `claude plugin eval .`
+.github/workflows/           runs `claude plugin validate .` on every push
 ```
 
 ## Tuning the cast
@@ -75,3 +77,9 @@ clerk inherit the session model.
   money were at stake, always name one thing that could kill the project.
 - All roles share one underlying model, so disagreement comes from the prompts,
   not from genuinely different minds. Keep the profiles sharp.
+- Panel profiles and their precedents are fiction. A figure from a seat's past
+  is colour, never data: seats keep such figures out of their questions and
+  recommendations, and the host says so at delivery.
+- The panel's record in `verdicts/` is created once the cast is confirmed and
+  is the transcript itself: seats read it by path, so the question and the
+  answers are written once and a run survives a lost context.
